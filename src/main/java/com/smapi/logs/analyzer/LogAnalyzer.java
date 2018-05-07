@@ -64,7 +64,7 @@ public class LogAnalyzer {
         System.out.println("-----------------------------------");
 
         for (String key : precentageValues.keySet()) {
-            System.out.format("%15s %10s", key, precentageValues.get(key));
+            System.out.format("%15s %12s", key, precentageValues.get(key));
             System.out.println();
         }
         System.out.println("-----------------------------------");
