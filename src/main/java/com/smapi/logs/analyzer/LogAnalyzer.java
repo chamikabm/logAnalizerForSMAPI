@@ -51,7 +51,7 @@ public class LogAnalyzer {
 
         for (String key : occurrences.keySet()) {
             double percentage = (occurrences.get(key)/(double)total) * 100;
-            finalResultMap.put(key, percentage + " %");
+            finalResultMap.put(key, String.format("%.2f", percentage) + " %");
         }
 
         return finalResultMap;
