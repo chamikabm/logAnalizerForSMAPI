@@ -12,7 +12,7 @@ import static com.smapi.logs.analyzer.Constants.LOGS_FILE_PATH;
 
 public class LogAnalyzer {
 
-    public static String baseService;
+    static String baseService;
 
     public static void main(String[] args) {
 
@@ -82,7 +82,7 @@ public class LogAnalyzer {
             if (key.equalsIgnoreCase(baseService)) {
                 percentage = BASE_SERVICE_PERCENTAGE;
             } else {
-                percentage = supc.calculateServiceUsage(key, occurrences.get(key), total);
+                percentage = supc.calculateServiceUsage(key);
                 System.out.println("///////////////////////////////////");
             }
 
@@ -102,6 +102,7 @@ public class LogAnalyzer {
             System.out.format("%15s %12s", key, percentageValues.get(key));
             System.out.println();
         }
+
         System.out.println("-----------------------------------");
     }
 
@@ -117,5 +118,4 @@ public class LogAnalyzer {
 
         return servicesMap;
     }
-
 }

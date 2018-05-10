@@ -1,15 +1,13 @@
 package com.smapi.logs.analyzer;
 
+import static com.smapi.logs.analyzer.Constants.BASE_VALUE;
 import static com.smapi.logs.analyzer.DataSet.*;
-import static com.smapi.logs.analyzer.TotalUsageCalculator.resultMap;
+import static com.smapi.logs.analyzer.DataConfigurer.resultMap;
 
 class TypeUsageCalCurator {
 
-
-    double calculateControllerUsage(int controllerCount, String serviceName) {
-
-        return (double)controllerCount/controllersMap.get(serviceName);
-    }
+    static Double coarseValue = 0.00;
+    static Double grainValue = 0.00;
 
     double calculateServiceUsage(int serviceCount, String serviceName) {
 
@@ -26,18 +24,20 @@ class TypeUsageCalCurator {
         return (double)repoCount/reposMap.get(serviceName);
     }
 
-    double calculateWholeServiceUsage(String serviceName, double controllerUsage, double serviceUsage,
-                                              double managerUsage, double repoUsage) {
+    double calculateWholeServiceUsage(String serviceName, double serviceUsage, double managerUsage, double repoUsage) {
 
-        Double finalValue = 0.00;
+        ValueCleanUpper valueCleanUpper = new ValueCleanUpper();
+        Double calculatedValue;
 
         if (resultMap.get(serviceName) != null) {
-            finalValue = Double.valueOf(String.valueOf(resultMap.get(serviceName)));
+            coarseValue = Double.valueOf(String.valueOf(resultMap.get(serviceName)));
+        } else {
+            coarseValue = BASE_VALUE;
         }
 
+        calculatedValue = (serviceUsage + managerUsage + repoUsage)/3;
+        grainValue = calculatedValue;
 
-        //(controllerUsage + serviceUsage + managerUsage + repoUsage)/4
-
-        return finalValue;
+        return valueCleanUpper.cleanUpFinalValue(calculatedValue);
     }
 }

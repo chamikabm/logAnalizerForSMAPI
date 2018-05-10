@@ -6,18 +6,19 @@ import org.json.simple.parser.JSONParser;
 import java.io.FileReader;
 import java.util.HashMap;
 
+import static com.smapi.logs.analyzer.Constants.INIT_DATA_FILE_PATH;
 import static com.smapi.logs.analyzer.LogAnalyzer.baseService;
 
-class TotalUsageCalculator {
+class DataConfigurer {
 
-    public static HashMap<String, Double> resultMap = new HashMap<>();
+    static HashMap<String, Double> resultMap = new HashMap<>();
 
-    void calculateTotalUsage() {
+    void configureInitialDataSet() {
         JSONParser parser = new JSONParser();
 
         try {
 
-            Object obj = parser.parse(new FileReader("/Users/Chamikabandara/Projects/MyProjects/ProjectResources/LogData/info.json"));
+            Object obj = parser.parse(new FileReader(INIT_DATA_FILE_PATH));
             JSONObject jsonObject = (JSONObject) obj;
 
             Object serviceObject = jsonObject.get(baseService);
