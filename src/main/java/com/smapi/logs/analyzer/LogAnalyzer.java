@@ -66,27 +66,31 @@ public class LogAnalyzer {
 
             fileInputStream.close();
         } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
     private static HashMap<String, String> getPercentages(HashMap<String, Integer> occurrences, Integer total)
             throws IOException {
 
+        TypeUsageCalCurator typeUsageCalCurator = new TypeUsageCalCurator();
+        typeUsageCalCurator.updateOccurrencesToProcess(occurrences, total);
+
         HashMap<String, String> finalResultMap = new HashMap<>();
         ServiceUsagePercentageCalculator supc = new ServiceUsagePercentageCalculator();
         double percentage;
 
-        for (String key : occurrences.keySet()) {
+        HashMap<Integer ,String> allServices = getServicesMap();
 
-            if (key.equalsIgnoreCase(baseService)) {
+        for (Integer key : allServices.keySet()) {
+
+            if (baseService.equalsIgnoreCase(allServices.get(key))) {
                 percentage = BASE_SERVICE_PERCENTAGE;
             } else {
-                percentage = supc.calculateServiceUsage(key);
-                System.out.println("///////////////////////////////////");
+                percentage = supc.calculateServiceUsage(allServices.get(key));
             }
 
-            finalResultMap.put(key, String.format("%.2f", percentage) + " %");
+            finalResultMap.put(allServices.get(key), String.format("%.2f", percentage) + " %");
         }
 
         return finalResultMap;

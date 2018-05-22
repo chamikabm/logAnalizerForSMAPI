@@ -1,5 +1,7 @@
 package com.smapi.logs.analyzer;
 
+import java.util.HashMap;
+
 import static com.smapi.logs.analyzer.Constants.BASE_VALUE;
 import static com.smapi.logs.analyzer.DataSet.*;
 import static com.smapi.logs.analyzer.DataConfigurer.resultMap;
@@ -8,6 +10,8 @@ class TypeUsageCalCurator {
 
     static Double coarseValue = 0.00;
     static Double grainValue = 0.00;
+    static HashMap<String, Integer> occurrences;
+    static Integer total;
 
     double calculateServiceUsage(int serviceCount, String serviceName) {
 
@@ -26,6 +30,7 @@ class TypeUsageCalCurator {
 
     double calculateWholeServiceUsage(String serviceName, double serviceUsage, double managerUsage, double repoUsage) {
 
+
         ValueCleanUpper valueCleanUpper = new ValueCleanUpper();
         Double calculatedValue;
 
@@ -38,6 +43,11 @@ class TypeUsageCalCurator {
         calculatedValue = (serviceUsage + managerUsage + repoUsage)/3;
         grainValue = calculatedValue;
 
-        return valueCleanUpper.cleanUpFinalValue(calculatedValue);
+        return calculatedValue > 0 ? valueCleanUpper.cleanUpFinalValue(calculatedValue) : coarseValue;
+    }
+
+    public void updateOccurrencesToProcess(HashMap<String, Integer> occurrences, Integer total) {
+        this.occurrences = occurrences;
+        this.total=total;
     }
 }
