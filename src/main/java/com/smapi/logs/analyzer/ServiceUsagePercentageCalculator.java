@@ -33,8 +33,6 @@ class ServiceUsagePercentageCalculator {
             }
         }
 
-        System.out.println("Service Inside : " + serviceName);
-
         double serviceUsage= 0.00, managerUsage= 0.00, repoUsage = 0.00;
 
         if (serviceCount > 0) {

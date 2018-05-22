@@ -28,7 +28,7 @@ public class LogAnalyzer {
         Integer selectedService = scanner.nextInt();
         System.out.println();
         baseService = servicesMap.get(selectedService);
-        System.out.println("End result will be based on  " + baseService  + " Service.");
+        System.out.println("End result will be based on " + baseService  + " Service.");
         System.out.println();
 
         DataSet dataSet = new DataSet();
